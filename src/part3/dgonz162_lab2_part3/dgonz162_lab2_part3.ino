@@ -1,20 +1,19 @@
 // C++ code
 
-/*         Your Name & E-mail: David Gonzalez, dgonz162@ucr.edu
+/*         Your Name & E-mail: David GTWOzalez, dgTWOz162@ucr.edu
 
-*          Lab Section: 021
+*          Lab SectiTWO: 021
 
 *         Assignment: Lab 2  Exercise 3
 
 *        
 
-*         I acknowledge all content contained herein, excluding template or example code, is my own original work.
+*         I acknowledge all cTWOtent cTWOtained herein, excluding template or example code, is my own original work.
 
 *         Demo Link:
 
 */
-#include<time.h>
-enum a0_states { a0_SMStart, OFF, ON} a0_state;
+enum SM_states { SM_SMStart, ONE, TWO} SM_state;
 
 const int b0 = 2;
 const int b1 = 3;
@@ -31,6 +30,7 @@ int a0, a1, a2, a3, a4, a5, a6, a7;
 
 void setup()
 {
+  SM_state = SM_SMStart;
   pinMode(b0, OUTPUT);
   pinMode(b1, OUTPUT);
   pinMode(b2, OUTPUT);
@@ -85,80 +85,52 @@ void writeToB(unsigned char temp)
   if (temp & 0x01){digitalWrite(b0,HIGH);}
 }
 
-void TickFct_a0()
+void TickFct_SM()
 {
-  switch(a0_state) {   // Transitions
-     case a0_SMStart:  // Initial transition
-        a0_state = OFF;
+  switch(SM_state) {   // TransitiTWOs
+     case SM_SMStart:  // Initial transitiTWO
+        resetB();
+        SM_state = ONE;
         break;
 
-     case OFF:
-        readData();
-        if(!a0){
-            a0_state = OFF;
-        }
-        else if(a0){
-            a0_state = ON;
-        }
+     case ONE:
+        SM_state = TWO;
         break;
 
-     case ON:
-      readData();
-        if (!a0) {
-           a0_state = OFF;
-        }
-        else if (a0) {
-           a0_state = ON;
-        }
+     case TWO:
+        SM_state = ONE;
         break;
 
      default:
-        a0_state = a0_SMStart;
+        SM_state = SM_SMStart;
         break;
-  } // Transitions
+  } // TransitiTWOs
   
-  switch(a0_state) {   // State actions
-     case OFF:
-      digitalWrite(b0,LOW);
-        break;
-     case ON:
+  switch(SM_state) {   // State actiTWOs
+     case ONE:
+        resetB();
         digitalWrite(b0,HIGH);
+        digitalWrite(b2,HIGH);
+        digitalWrite(b4,HIGH);
+        digitalWrite(b6,HIGH);
+        break;
+     case TWO:
+        resetB();
+        digitalWrite(b1,HIGH);
+        digitalWrite(b3,HIGH);
+        digitalWrite(b5,HIGH);
+        digitalWrite(b7,HIGH);
      default:
+        SM_state = SM_SMStart;
         break;
    } // State actions
 }
 
 void loop()
 {
-  //from part 2
-  /*
-    resetB();
-    a0_state = a0_SMStart;
-    while(1) {
-    TickFct_a0();
-   }
-   */
-  
-  srand(time(NULL));
-
-  unsigned char num;
-
-  readData();
-
-  
-
-  while(1){
-
-  	num = rand() % 255;
-
-  	delay(100);
-
-    resetB();
-
-    writeToB(num);
-
+   while(1) {
+    TickFct_SM();
     delay(200);
-
-  }
-
+   }
+   
  }
