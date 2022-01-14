@@ -1,16 +1,16 @@
 // C++ code
+/*        Your Name & E-mail: David Gonzalez, dgonz162@ucr.edu
 
-/*         Your Name & E-mail: David GTWOzalez, dgTWOz162@ucr.edu
-
-*          Lab SectiTWO: 021
+*          Lab Section: 021
 
 *         Assignment: Lab 2  Exercise 3
 
-*        
 
-*         I acknowledge all cTWOtent cTWOtained herein, excluding template or example code, is my own original work.
+*         Exercise Description: light show
 
-*         Demo Link:
+*         I acknowledge all content contained herein, excluding template or example code, is my own original work.
+
+*         Demo Link: 
 
 */
 enum SM_states { SM_SMStart, ONE, TWO} SM_state;
